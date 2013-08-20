@@ -46,7 +46,7 @@
         CGColorSpaceRelease(colorSpace);
 
         UIImage *imageToUse = [UIImage imageNamed:@"holder"];
-        holderView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, imageToUse.size.width, imageToUse.size.height)];
+        holderView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, imageToUse.size.width/2, imageToUse.size.height/2)];
         [holderView setImage:imageToUse];
         [self addSubview:holderView];
         [self bringSubviewToFront:holderView];
@@ -56,6 +56,12 @@
     }
 
     return self;
+}
+
+- (UIColor*) fillColor
+{
+    if (!_fillColor) _fillColor = [UIColor orangeColor];
+    return _fillColor;
 }
 
 #pragma mark -
@@ -86,7 +92,7 @@
     }
 
     drawingRect  = CGRectMake(drawingRect.origin.x, drawingRect.origin.y, center.x, drawingRect.size.height);
-    [self fillRect:drawingRect withColor:[UIColor orangeColor].CGColor onContext:_context];
+    [self fillRect:drawingRect withColor:self.fillColor.CGColor onContext:_context];
 
     drawingRect  = CGRectMake(drawingRect.origin.x + center.x, drawingRect.origin.y, self.frame.size.width, drawingRect.size.height);
     [self fillRect:drawingRect withColor:[UIColor whiteColor].CGColor onContext:_context];
@@ -346,9 +352,9 @@
 }
 
 - (void)setRadiusPoint:(float)radiusPoint {
-    if (_radiusCircle > radiusPoint - 4) {
-        radiusPoint = _radiusCircle + 4;
-    }
+//    if (_radiusCircle > radiusPoint - 4) {
+//        radiusPoint = _radiusCircle + 4;
+//    }
 
     _radiusPoint = radiusPoint;
     [self setNeedsDisplay];
